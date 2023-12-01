@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Detail from "pages/Detail";
 import Home from "pages/Home";
-import Login from "pages/Login";
+import LoginPage from "pages/LoginPage";
 import Profile from "pages/Profile";
 
 const Router = () => {
@@ -9,9 +9,9 @@ const Router = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="Detail/:memberId" element={<Detail />} />
-          <Route path="Login" element={<Login />} />
-          <Route path="Profile/:userId" element={<Profile />} />
+          <Route path="detail/:memberId" element={<Detail />} />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="profile/:userId" element={<Profile />} />
         </Routes>
       </BrowserRouter>
   );
