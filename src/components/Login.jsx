@@ -6,7 +6,7 @@ function Login() {
   const [userId, setUserId] = useState("");
   const [userPw, setUserPw] = useState("");
   const [userNickName, setUserNickName] = useState("");
-  const [toggle, setToggle] = useState("");
+  const [loginToggle, setLoginToggle] = useState(true);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -14,19 +14,21 @@ function Login() {
   const onChangeUserId = e => setUserId(e.target.value);
   const onChangeUserPw = e => setUserPw(e.target.value);
   const onChangeUserNickName = e => setUserNickName(e.target.value);
-  const onClickToggleHandler = () => setToggle(prev => !prev);
+  const onClickToggleHandler = () => setLoginToggle(prev => !prev);
 
   return (
     <div style={{display: "flex", justifyContent: "center"}}>
-      <LoginJoinBoxStyle>
+      {loginToggle === true ? (
+        <LoginJoinBoxStyle>
         <LogJoinLabelstyle>로그인</LogJoinLabelstyle>
         <InputFormStyle onSubmit={onSubmit} style={{display: "flex", flexDirection: "column"}}>
           <InputStyle onChange={onChangeUserId} minLength={4} maxLength={10} value={userId} placeholder='아이디(4~10글자)' />
           <InputStyle onChange={onChangeUserPw} minLength={4} maxLength={15} value={userPw} placeholder='비밀번호(4~15글자)' />
           <LogJoinBtnStyle>로그인</LogJoinBtnStyle>
         </InputFormStyle>
-        <LabelStyle>아이디가 없으신가요?<LogJoinToggleBtnStyle onClick={onClickToggleHandler}>회원가입</LogJoinToggleBtnStyle></LabelStyle>
+        <LabelStyle>아이디가 없으신가요?<LogJoinToggleBtnStyle onClick={()=>onClickToggleHandler()}>회원가입</LogJoinToggleBtnStyle></LabelStyle>
       </LoginJoinBoxStyle>
+      ) : (
       <LoginJoinBoxStyle>
         <LogJoinLabelstyle>회원가입</LogJoinLabelstyle>
         <InputFormStyle onSubmit={onSubmit} style={{display: "flex", flexDirection: "column"}}>
@@ -35,8 +37,9 @@ function Login() {
           <InputStyle onChange={onChangeUserNickName} minLength={1} maxLength={10} value={userNickName} placeholder='닉네임(1~10글자)' />
           <LogJoinBtnStyle>회원가입</LogJoinBtnStyle>
         </InputFormStyle>
-        <LabelStyle>아이디가 있으신가요?<LogJoinToggleBtnStyle onClick={onClickToggleHandler}>로그인</LogJoinToggleBtnStyle></LabelStyle>
+        <LabelStyle>아이디가 있으신가요?<LogJoinToggleBtnStyle onClick={()=>onClickToggleHandler()}>로그인</LogJoinToggleBtnStyle></LabelStyle>
       </LoginJoinBoxStyle>
+      )}
     </div>
   )
 }
