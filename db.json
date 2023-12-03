@@ -1,5 +1,5 @@
 {
-  "users": [
+  "login": [
     {
       "id": 1,
       "userid": "test1",
@@ -17,6 +17,12 @@
       "userid": "test3",
       "userpw": 1234,
       "usernickname": "메롱3"
+    },
+    {
+      "userid": "test2",
+      "userpw": "1234",
+      "usernickname": "",
+      "id": 4
     }
   ],
   "register": [
@@ -31,6 +37,24 @@
       "userpw": "1234",
       "usernickname": "메롱2",
       "id": 2
+    },
+    {
+      "userid": "test2",
+      "userpw": "1234",
+      "usernickname": "메롱2",
+      "id": 3
+    },
+    {
+      "userid": "test2",
+      "userpw": "1234",
+      "usernickname": "메롱2",
+      "id": 4
     }
+  ],
+  "profile": [
+    {}
+  ],
+  "posts": [
+    {}
   ]
 }

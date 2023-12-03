@@ -1,42 +1,58 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components';
 import axios from "axios";
+import { useCookies } from 'react-cookie';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
-  // 회원가입 시 input 영역 value 가져오기
-  const [joinInput, setJoinInput] = useState({
+
+  const navigate = useNavigate();
+
+  // 회원가입 및 로그인 시 input 영역 value 가져오기
+  const [inputValue, setInputValue] = useState({
     userid: "",
     userpw: "",
     usernickname: ""
   });
-  const onChangeJoinInput = e => {
+  const onChangeLogJoinInput = e => {
     const {name, value} = e.target
-    setJoinInput({
-      ...joinInput,
+    setInputValue({
+      ...inputValue,
       [name]: value,
     });
   };
-  // 회원가입 시 db에 값 넣어주기
+
+  // 쿠키를 저장하기 위한 state
+  // 차례대로 쿠키 가져오기, 쿠키 추가하기, 쿠키 제거하기
+  const [cookies, setCookie, removeCookie] = useCookies();
+
+  // 회원가입 시 db에 값 넣어주기(accessToken 로컬스토리지에 저장)
   const onSubmitdoSignUpHandler = async () => {
     try {
       const {data} = await axios.post(
         'http://localhost:4001/register',
-        joinInput,
+        inputValue,
       )
-      console.log(data)
+      setCookie('accessToken', data['accessToken'], {path: '/'})
+      navigate('/')
     } catch (error) {
       console.log(error)
     }
   };
 
-  const [loginInput, setLoginInput] = useState({
-    userid: "",
-    userpw: ""
-  })
-
-  const [userId, setUserId] = useState({});
-  const [userPw, setUserPw] = useState({});
-  const [userNickName, setUserNickName] = useState({});
+  // 로그인 시 db에 값 넣어주기(accessToken 로컬스토리지에 저장)
+  const onSubmitLoginHandler = async () => {
+    try {
+      const {data} = await axios.post(
+        'http://localhost:4001/login',
+        inputValue,
+      )
+      setCookie('accessToken', data['accessToken'], {path: '/'})
+      navigate('/')
+    } catch (error) {
+      console.log(error)
+    }
+  };
 
   // 로그인-회원가입 토글 state
   const [loginToggle, setLoginToggle] = useState(true);
@@ -49,40 +65,37 @@ function Login() {
   const [users, setUsers] = useState(null);
 
   // db 연결
-  const fatchUsers = async () => {
-    const {data} = await axios.get('http://localhost:4001/users');
-    setUsers(data);
-  }
+  // const fatchUsers = async () => {
+  //   const {data} = await axios.get('http://localhost:4001/users');
+  //   setUsers(data);
+  // }
 
-  const onSubmitHandler = async () => {
-    axios.post('http://localhost:4001/users', userId, userPw, userNickName);
-    setUserId(userId);
-    setUserPw(userPw);
-    setUserNickName(userNickName);
-  }
+  // useEffect(() => {
+  //   fatchUsers();
+  // }, []);
 
-  useEffect(() => {
-    fatchUsers();
-  }, []);
-
-  // 버튼 submit 막아주고
-  const onSubmit = (e) => {
+  // 회원가입 시 버튼 submit 막아주고
+  const onSubmitdoSignUp = (e) => {
     e.preventDefault();
     // 버튼 클릭 시 input에 들어가는 값을 이용하여 db에 저장(post 요청)
     onSubmitdoSignUpHandler();
   }
-  const onChangeUserId = e => setUserId({userid: e.target.value});
-  const onChangeUserPw = e => setUserPw({userpw: e.target.value});
-  
+
+  // 회원가입 시 버튼 submit 막아주고
+  const onSubmitLogin = (e) => {
+    e.preventDefault();
+    // 버튼 클릭 시 input에 들어가는 값을 이용하여 db에 저장(post 요청)
+    onSubmitLoginHandler();
+  }
 
   return (
     <div style={{display: "flex", justifyContent: "center"}}>
       {loginToggle === true ? (
         <LoginJoinBoxStyle>
         <LogJoinLabelstyle>로그인</LogJoinLabelstyle>
-        <InputFormStyle onSubmit={onSubmit}>
-          <InputStyle onChange={onChangeUserId} minLength={4} maxLength={10} value={userId.userid} placeholder='아이디(4~10글자)' required />
-          <InputStyle onChange={onChangeUserPw} minLength={4} maxLength={15} value={userPw.userpw} placeholder='비밀번호(4~15글자)' required />
+        <InputFormStyle onSubmit={onSubmitLogin}>
+          <InputStyle onChange={onChangeLogJoinInput} minLength={4} maxLength={10} name="userid" placeholder='아이디(4~10글자)' required />
+          <InputStyle onChange={onChangeLogJoinInput} minLength={4} maxLength={15} name="userpw" type="password" placeholder='비밀번호(4~15글자)' required />
           <LogJoinBtnStyle type="submit">로그인</LogJoinBtnStyle>
         </InputFormStyle>
         <LabelStyle>아이디가 없으신가요?<LogJoinToggleBtnStyle onClick={()=>onClickToggleHandler()}>회원가입</LogJoinToggleBtnStyle></LabelStyle>
@@ -90,10 +103,10 @@ function Login() {
       ) : (
       <LoginJoinBoxStyle>
         <LogJoinLabelstyle>회원가입</LogJoinLabelstyle>
-        <InputFormStyle onSubmit={onSubmit}>
-          <InputStyle onChange={onChangeJoinInput} minLength={4} maxLength={10} name="userid" placeholder='아이디(4~10글자)' required />
-          <InputStyle onChange={onChangeJoinInput} minLength={4} maxLength={15} name="userpw" type="password" placeholder='비밀번호(4~15글자)' required />
-          <InputStyle onChange={onChangeJoinInput} minLength={1} maxLength={10} name='usernickname' placeholder='닉네임(1~10글자)' required />
+        <InputFormStyle onSubmit={onSubmitdoSignUp}>
+          <InputStyle onChange={onChangeLogJoinInput} minLength={4} maxLength={10} name="userid" placeholder='아이디(4~10글자)' required />
+          <InputStyle onChange={onChangeLogJoinInput} minLength={4} maxLength={15} name="userpw" type="password" placeholder='비밀번호(4~15글자)' required />
+          <InputStyle onChange={onChangeLogJoinInput} minLength={1} maxLength={10} name='usernickname' placeholder='닉네임(1~10글자)' required />
           <LogJoinBtnStyle type="submit">회원가입</LogJoinBtnStyle>
         </InputFormStyle>
         <LabelStyle>아이디가 있으신가요?<LogJoinToggleBtnStyle onClick={()=>onClickToggleHandler()}>로그인</LogJoinToggleBtnStyle></LabelStyle>
@@ -135,10 +148,16 @@ const InputStyle = styled.input`
   background-color: transparent;
   border-width: 0 0 0.1rem;
   outline: none;
-  &:focus {
+  &:valid:focus {
     border-width: 0 0 0.1rem;
-    box-shadow: 0 0.1rem 0 0 rgb(255, 215, 234);
-    border-color: rgb(255, 104, 174);
+    box-shadow: 0 0.1rem 0 0 rgb(151, 229, 138);
+    border-color: rgb(128, 221, 21);
+    transition: 0.5s;
+  }
+  &:invalid:focus {
+    border-width: 0 0 0.1rem;
+    box-shadow: 0 0.1rem 0 0 rgb(255, 177, 177);
+    border-color: red;
     transition: 0.5s;
   }
 `;
