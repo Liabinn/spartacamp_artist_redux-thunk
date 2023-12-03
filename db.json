@@ -1,7 +1,36 @@
 {
-  "profile": [
-    { "id": "test1@naver.com", "pw": 1234, "nickname": "메롱" },
-    { "id": "test2@naver.com", "pw": 1234, "nickname": "메롱2" },
-    { "id": "test3@naver.com", "pw": 1234, "nickname": "메롱3" }
+  "users": [
+    {
+      "id": 1,
+      "userid": "test1",
+      "userpw": 1234,
+      "usernickname": "메롱"
+    },
+    {
+      "id": 2,
+      "userid": "test2",
+      "userpw": 1234,
+      "usernickname": "메롱2"
+    },
+    {
+      "id": 3,
+      "userid": "test3",
+      "userpw": 1234,
+      "usernickname": "메롱3"
+    }
+  ],
+  "register": [
+    {
+      "id": 1,
+      "userid": "test1",
+      "userpw": 1234,
+      "usernickname": "메롱"
+    },
+    {
+      "userid": "test2",
+      "userpw": "1234",
+      "usernickname": "메롱2",
+      "id": 2
+    }
   ]
 }
