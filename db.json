@@ -1,0 +1,7 @@
+{
+  "profile": [
+    { "id": "test1@naver.com", "pw": 1234, "nickname": "메롱" },
+    { "id": "test2@naver.com", "pw": 1234, "nickname": "메롱2" },
+    { "id": "test3@naver.com", "pw": 1234, "nickname": "메롱3" }
+  ]
+}

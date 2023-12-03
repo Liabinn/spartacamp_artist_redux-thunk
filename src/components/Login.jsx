@@ -7,6 +7,7 @@ function Login() {
   const [userPw, setUserPw] = useState("");
   const [userNickName, setUserNickName] = useState("");
   const [loginToggle, setLoginToggle] = useState(true);
+  // const [isValid, setValid] = useState(false);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -24,7 +25,7 @@ function Login() {
         <InputFormStyle onSubmit={onSubmit} style={{display: "flex", flexDirection: "column"}}>
           <InputStyle onChange={onChangeUserId} minLength={4} maxLength={10} value={userId} placeholder='아이디(4~10글자)' />
           <InputStyle onChange={onChangeUserPw} minLength={4} maxLength={15} value={userPw} placeholder='비밀번호(4~15글자)' />
-          <LogJoinBtnStyle>로그인</LogJoinBtnStyle>
+          <LogJoinBtnStyle type="submit">로그인</LogJoinBtnStyle>
         </InputFormStyle>
         <LabelStyle>아이디가 없으신가요?<LogJoinToggleBtnStyle onClick={()=>onClickToggleHandler()}>회원가입</LogJoinToggleBtnStyle></LabelStyle>
       </LoginJoinBoxStyle>
@@ -35,7 +36,7 @@ function Login() {
           <InputStyle onChange={onChangeUserId} minLength={4} maxLength={10} value={userId} placeholder='아이디(4~10글자)' />
           <InputStyle onChange={onChangeUserPw} minLength={4} maxLength={15} value={userPw} placeholder='비밀번호(4~15글자)' />
           <InputStyle onChange={onChangeUserNickName} minLength={1} maxLength={10} value={userNickName} placeholder='닉네임(1~10글자)' />
-          <LogJoinBtnStyle>회원가입</LogJoinBtnStyle>
+          <LogJoinBtnStyle type="submit">회원가입</LogJoinBtnStyle>
         </InputFormStyle>
         <LabelStyle>아이디가 있으신가요?<LogJoinToggleBtnStyle onClick={()=>onClickToggleHandler()}>로그인</LogJoinToggleBtnStyle></LabelStyle>
       </LoginJoinBoxStyle>
@@ -51,10 +52,10 @@ const LoginJoinBoxStyle = styled.div`
   justify-content: center;
   border: 1px solid white;
   box-shadow: 3px 2px 15px 0 rgb(255, 104, 174);
-  border-radius: 15px;
-  row-gap: 10px;
+  border-radius: 1.5rem;
+  row-gap: 1rem;
   padding: 2rem;
-  margin: 20px;
+  margin: 5rem 2rem 5rem 2rem;
   color: rgb(95, 2, 46);
 `;
 
@@ -117,6 +118,9 @@ const LogJoinToggleBtnStyle = styled.button`
   &:hover {
     color: white;
     cursor: pointer;
+  }
+  &:disabled {
+    background-color: rgb(168, 202, 244);
   }
 `;
 
