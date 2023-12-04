@@ -30,7 +30,7 @@ function Login() {
   const onSubmitdoSignUpHandler = async () => {
     try {
       const {data} = await axios.post(
-        'http://localhost:4001/register',
+        'http://localhost:4000/register',
         inputValue,
       )
       setCookie('accessToken', data['accessToken'], {path: '/'})
@@ -44,7 +44,7 @@ function Login() {
   const onSubmitLoginHandler = async () => {
     try {
       const {data} = await axios.post(
-        'http://localhost:4001/login',
+        'http://localhost:4000/login',
         inputValue,
       )
       setCookie('accessToken', data['accessToken'], {path: '/'})
@@ -54,25 +54,17 @@ function Login() {
     }
   };
 
+  useEffect(() => {
+    onSubmitdoSignUpHandler();
+    onSubmitLoginHandler();
+  }, []);
+
   // 로그인-회원가입 토글 state
   const [loginToggle, setLoginToggle] = useState(true);
   const onClickToggleHandler = () => setLoginToggle(prev => !prev);
 
   // 로그인 유무 확인 state
   // const [isValid, setValid] = useState(false);
-  
-  //user 정보 가져오기
-  const [users, setUsers] = useState(null);
-
-  // db 연결
-  // const fatchUsers = async () => {
-  //   const {data} = await axios.get('http://localhost:4001/users');
-  //   setUsers(data);
-  // }
-
-  // useEffect(() => {
-  //   fatchUsers();
-  // }, []);
 
   // 회원가입 시 버튼 submit 막아주고
   const onSubmitdoSignUp = (e) => {
@@ -89,7 +81,7 @@ function Login() {
   }
 
   return (
-    <div style={{display: "flex", justifyContent: "center"}}>
+    <EntireBoxStyle>
       {loginToggle === true ? (
         <LoginJoinBoxStyle>
         <LogJoinLabelstyle>로그인</LogJoinLabelstyle>
@@ -112,9 +104,14 @@ function Login() {
         <LabelStyle>아이디가 있으신가요?<LogJoinToggleBtnStyle onClick={()=>onClickToggleHandler()}>로그인</LogJoinToggleBtnStyle></LabelStyle>
       </LoginJoinBoxStyle>
       )}
-    </div>
+    </EntireBoxStyle>
   )
 }
+
+const EntireBoxStyle = styled.div`
+  display: flex;
+  justify-content: center;
+`;
 
 const LoginJoinBoxStyle = styled.div`
   width: 30rem;

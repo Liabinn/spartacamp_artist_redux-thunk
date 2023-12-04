@@ -12,6 +12,7 @@ const Router = () => {
   return (
       <BrowserRouter>
         <Routes>
+          {/* 회원가입-로그인 구현을 하지 못해 임시로 주석처리 해놓음 */}
           {/* <Route path="/" element={authstate.isAuth === false ? <LoginPage /> : <Home />} /> */}
           <Route path="/" element={<Home />} />
           <Route path="login" element={<LoginPage />} />
